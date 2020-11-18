@@ -56,20 +56,19 @@ public class Main extends Component {
     class SaveListener implements ActionListener {
         public void actionPerformed(ActionEvent ev) {
             fileChooser = new JFileChooser();
-            fileChooser.showSaveDialog(Main.this);   // ВЫЗЫВАЕТСЯ ДИАЛОГОВОЕ ОКНО 1 РАЗ
+            int result = fileChooser.showSaveDialog(Main.this);   // ВЫЗЫВАЕТСЯ ДИАЛОГОВОЕ ОКНО 1 РАЗ
             fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
             file = fileChooser.getSelectedFile();
             try {
-                FileWriter fileWriter = new FileWriter(file);
-                getter = textArea.getText();
-                fileWriter.write(getter);
-                fileWriter.close();
-                int result = fileChooser.showSaveDialog(Main.this); // ВЫЗЫВАЕТСЯ ДИАЛОГОВОЕ ОКНО 2-ОЙ РАЗ
-                if (result == JFileChooser.APPROVE_OPTION) {
+                if (file != null && result == JFileChooser.APPROVE_OPTION) {
+                    FileWriter fileWriter = new FileWriter(file);
+                    getter = textArea.getText();
+                    fileWriter.write(getter);
+                    fileWriter.close();
                     JOptionPane.showMessageDialog(fileChooser.getParent(),
-                            "Your file was successfully saved!" + "\n" + "\n"
-                                    + "Path: " + fileChooser.getSelectedFile() + "\n" + "FileName: "
-                                    + file.getName());
+                        "Your file was successfully saved!" + "\n" + "\n"
+                            + "Path: " + fileChooser.getSelectedFile() + "\n" + "FileName: "
+                            + file.getName());
                 }
             } catch (IOException ex) {
                 ex.printStackTrace();
